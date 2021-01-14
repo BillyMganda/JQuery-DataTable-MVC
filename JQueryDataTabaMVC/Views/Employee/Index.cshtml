@@ -1,0 +1,90 @@
+﻿
+@{
+    ViewBag.Title = "Employee List";
+}
+
+<h2>Employee List</h2>
+<button style="margin-bottom:10px" class="btn btn-primary" onclick="addNewEmployee()">New Employee</button>
+<table id="employeeTable" class="display">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Position</th>
+            <th>Office</th>
+            <th>Age</th>
+            <th>Salary</th>
+        </tr>
+    </thead>
+</table>
+
+<!--Styling From DataTable-->
+<link href="//cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css" rel="stylesheet" />
+
+@section scripts{
+    <script src="//cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+    <script>
+        //SHOW MODAL
+        function addNewEmployee() {
+            $("#newEmployeeModal").modal();
+        }
+
+        $(document).ready(function () {
+            $('#employeeTable').DataTable({
+                "ajax": {
+                    "url": "/Employee/GetList",
+                    "type": "GET",
+                    "datatype": "Json"
+                },
+                "columns": [
+                    { "data": "Name" },
+                    { "data": "Position" },
+                    { "data": "Office" },
+                    { "data": "Age" },
+                    { "data": "Salary" }
+                ]
+            });
+        });
+    </script>
+}
+
+<!--MODAL -NEW EMPLOYEE- WINDOW-->
+
+<div class="modal fade" id="newEmployeeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">New Employee</h5>  
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="employee-name" class="col-form-label">Name:</label>
+                        <input type="text" class="form-control" id="name">
+                    </div>
+                    <div class="form-group">
+                        <label for="employee-position" class="col-form-label">Position:</label>
+                        <input type="text" class="form-control" id="position">
+                    </div>
+                    <div class="form-group">
+                        <label for="employee-office" class="col-form-label">Office:</label>
+                        <input type="text" class="form-control" id="office">
+                    </div>
+                    <div class="form-group">
+                        <label for="employee-age" class="col-form-label">Age:</label>
+                        <input type="number" class="form-control" id="age">
+                    </div>
+                    <div class="form-group">
+                        <label for="employee-salary" class="col-form-label">Salary:</label>
+                        <input type="number" class="form-control" id="salary">
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-success">Save Employee</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
